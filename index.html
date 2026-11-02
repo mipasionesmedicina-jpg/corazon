@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WebQuest de Semiología Médica sobre auscultación cardíaca para estudiantes de Medicina.">
+<title>WebQuest | Misión: Escuchar el corazón</title>
+<style>
+:root {
+  --navy:#17324d;
+  --blue:#245b78;
+  --teal:#168c88;
+  --mint:#e5f5f1;
+  --coral:#e87868;
+  --gold:#f1bd59;
+  --paper:#f5f8fb;
+  --white:#ffffff;
+  --text:#253647;
+  --muted:#637488;
+  --border:#dbe4ec;
+  --shadow:0 8px 26px rgba(23,50,77,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.65;
+}
+button,input,select{font:inherit}
+button,a{touch-action:manipulation}
+a{color:#176b88;overflow-wrap:anywhere}
+a:focus-visible,button:focus-visible,select:focus-visible{
+  outline:3px solid var(--gold);outline-offset:3px
+}
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(130deg,#17324d,#245b78 65%,#168c88);
+  color:white;padding:48px 20px 38px;
+}
+.hero:after{
+  content:"♡";position:absolute;right:6%;top:-62px;
+  font-size:250px;opacity:.08;pointer-events:none
+}
+.hero-inner,.container{max-width:1120px;margin:auto}
+.eyebrow{
+  text-transform:uppercase;letter-spacing:2px;font-size:.76rem;
+  font-weight:800;color:#bcece5
+}
+h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.1;margin:12px 0}
+.hero p{max-width:740px;color:#e4f0f6;font-size:1.08rem}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.pill{padding:6px 12px;border:1px solid #ffffff55;border-radius:999px;font-size:.85rem}
+.container{padding:26px 18px 54px}
+.notice{
+  border-left:5px solid var(--gold);background:#fff8e8;
+  padding:14px 17px;border-radius:10px;margin-bottom:22px
+}
+.tabs{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;
+  padding:10px;background:white;border:1px solid var(--border);
+  border-radius:15px;box-shadow:var(--shadow)
+}
+.tab{
+  flex:1 1 125px;min-height:44px;border:0;border-radius:9px;
+  padding:10px 12px;background:transparent;color:var(--navy);
+  font-weight:750;cursor:pointer
+}
+.tab[aria-selected="true"]{background:var(--navy);color:white}
+.panel{display:none;animation:fade .25s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+h2{color:var(--navy);font-size:clamp(1.45rem,3vw,2rem);line-height:1.25}
+h3{color:var(--blue);line-height:1.3}
+.lead{font-size:1.06rem;max-width:850px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{
+  background:white;border:1px solid var(--border);border-radius:15px;
+  padding:20px;box-shadow:var(--shadow);min-width:0
+}
+.card p:last-child{margin-bottom:0}
+.icon{font-size:1.6rem}
+.callout{background:var(--mint);border-radius:12px;padding:15px 18px;margin:18px 0}
+.steps{counter-reset:step;list-style:none;padding:0}
+.steps li{
+  position:relative;margin:12px 0;padding:16px 16px 16px 62px;
+  background:white;border:1px solid var(--border);border-radius:12px
+}
+.steps li:before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:16px;top:16px;width:30px;height:30px;
+  display:grid;place-items:center;border-radius:50%;
+  background:var(--teal);color:white;font-weight:800
+}
+.role{border-top:4px solid var(--teal)}
+.resource{display:flex;flex-direction:column;gap:7px}
+.resource a{font-weight:750}
+.small{font-size:.88rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:white;font-size:.91rem}
+th,td{border:1px solid var(--border);padding:12px;vertical-align:top;text-align:left}
+th{background:var(--navy);color:white}
+.rubric-wrap{overflow-x:auto;border-radius:12px}
+.rubric{min-width:780px}
+.level{font-weight:800;color:var(--blue)}
+.button{
+  display:inline-block;border:0;border-radius:10px;padding:11px 17px;
+  background:var(--teal);color:white;font-weight:800;cursor:pointer;
+  text-decoration:none
+}
+.button.secondary{background:var(--navy)}
+.button:disabled{opacity:.5;cursor:not-allowed}
+.quizbox{background:white;border:1px solid var(--border);padding:20px;border-radius:14px;margin:16px 0}
+.question{border-top:1px solid var(--border);padding:16px 0}
+.question:first-child{border-top:0}
+.question legend{font-weight:800;margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:10px;border:1px solid var(--border);border-radius:9px;cursor:pointer}
+.option:hover{background:#f2f8fa}
+.option input{margin-right:8px}
+.feedback{margin-top:8px;font-weight:700}
+.correct{color:#13734b}
+.incorrect{color:#a53a35}
+select{padding:8px;border:1px solid #aebdca;border-radius:7px;background:white;max-width:100%}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin:12px 0}
+.dragbank{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.draggable{
+  padding:8px 12px;background:#e5f5f1;border:1px solid #168c88;
+  border-radius:8px;cursor:grab;user-select:none
+}
+.dropzone{
+  min-height:48px;padding:10px;border:2px dashed #aab9c6;
+  border-radius:9px;background:#f8fafc
+}
+.dropzone.over{background:#e5f5f1;border-color:var(--teal)}
+.dropzone span{font-size:.9rem}
+.result{
+  display:none;background:var(--navy);color:white;padding:18px;
+  border-radius:12px;margin-top:18px
+}
+.result strong{font-size:1.5rem}
+.progress{height:9px;background:#dce5ed;border-radius:99px;overflow:hidden;margin:10px 0 20px}
+.progressbar{height:100%;width:0;background:var(--teal);transition:width .25s}
+iframe{width:100%;height:540px;border:0;border-radius:12px;background:#eef2f6}
+footer{background:#10263a;color:#dce8f0;padding:24px 18px;text-align:center}
+footer a{color:#bcece5}
+hr{border:0;border-top:1px solid var(--border);margin:24px 0}
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+  .tabs{position:static}
+  iframe{height:430px}
+  .match-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">WebQuest · Semiología Médica</div>
+    <h1>🫀 Misión: escuchar el corazón</h1>
+    <p>Una investigación clínica colaborativa para aprender a explorar, describir e interpretar los sonidos cardíacos mediante el razonamiento semiológico.</p>
+    <div class="pills">
+      <span class="pill">🎓 Nivel: pregrado de Medicina</span>
+      <span class="pill">👥 Trabajo colaborativo</span>
+      <span class="pill">⏱️ Duración sugerida: 90–120 min</span>
+      <span class="pill">💻 Recursos digitales</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="notice">
+    <strong>Pregunta guía:</strong> ¿Cómo puede una auscultación cardíaca sistemática aportar información clínica útil sin sustituir la historia clínica ni las pruebas complementarias?
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Secciones de la WebQuest">
+    <button class="tab" role="tab" id="tab-intro" aria-controls="intro" aria-selected="true" data-target="intro">1. Introducción</button>
+    <button class="tab" role="tab" id="tab-objetivos" aria-controls="objetivos" aria-selected="false" data-target="objetivos">2. Objetivos</button>
+    <button class="tab" role="tab" id="tab-tarea" aria-controls="tarea" aria-selected="false" data-target="tarea">3. Tarea</button>
+    <button class="tab" role="tab" id="tab-proceso" aria-controls="proceso" aria-selected="false" data-target="proceso">4. Proceso</button>
+    <button class="tab" role="tab" id="tab-recursos" aria-controls="recursos" aria-selected="false" data-target="recursos">5. Recursos</button>
+    <button class="tab" role="tab" id="tab-evaluacion" aria-controls="evaluacion" aria-selected="false" data-target="evaluacion">6. Evaluación</button>
+    <button class="tab" role="tab" id="tab-conclusion" aria-controls="conclusion" aria-selected="false" data-target="conclusion">7. Conclusión</button>
+    <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" data-target="quiz">8. Quiz</button>
+    <button class="tab" role="tab" id="tab-juego" aria-controls="juego" aria-selected="false" data-target="juego">9. Juego</button>
+  </nav>
+
+  <section class="panel active" id="intro" role="tabpanel" aria-labelledby="tab-intro">
+    <h2>1. Introducción: el reto del equipo clínico</h2>
+    <p class="lead">Durante una consulta, una persona adulta refiere cansancio y disnea al subir escaleras. En la exploración inicial, el profesional detecta un sonido cardíaco que requiere una valoración más cuidadosa. El equipo debe decidir qué escuchar, cómo describir el hallazgo y qué información adicional necesita antes de formular una hipótesis clínica.</p>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">🩺</div>
+        <h3>El problema auténtico</h3>
+        <p>Una auscultación poco sistemática puede hacer que se omitan hallazgos relevantes o que se describan de forma imprecisa. El reto es construir una guía breve, rigurosa y comprensible para estudiantes que inician el aprendizaje de la exploración cardiovascular.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🔎</div>
+        <h3>La pregunta de investigación</h3>
+        <p>¿Qué pasos, puntos de auscultación y características de los ruidos permiten documentar el examen cardíaco de manera ordenada y comunicar los hallazgos con precisión?</p>
+      </article>
+    </div>
+    <div class="callout">
+      <strong>Contexto y seguridad:</strong> esta actividad tiene fines educativos. No permite diagnosticar pacientes reales por sí sola. La práctica física debe realizarse con supervisión docente, consentimiento, privacidad y respeto por la persona examinada.
+    </div>
+  </section>
+
+  <section class="panel" id="objetivos" role="tabpanel" aria-labelledby="tab-objetivos">
+    <h2>2. Objetivos de aprendizaje</h2>
+    <p>Al finalizar la WebQuest, el estudiante podrá demostrar los siguientes desempeños observables:</p>
+    <div class="grid">
+      <article class="card"><h3>01 · Explicar</h3><p>Describir la relación básica entre el ciclo cardíaco y los ruidos S1 y S2, distinguiendo sonidos normales de hallazgos que requieren caracterización adicional.</p></article>
+      <article class="card"><h3>02 · Aplicar</h3><p>Organizar una secuencia sistemática de auscultación e identificar los focos aórtico, pulmonar, tricuspídeo y mitral.</p></article>
+      <article class="card"><h3>03 · Registrar</h3><p>Describir un hallazgo auscultatorio mediante localización, momento del ciclo, intensidad, tono, duración y posible irradiación, cuando corresponda.</p></article>
+      <article class="card"><h3>04 · Analizar</h3><p>Relacionar hallazgos simulados con hipótesis iniciales, reconocer límites de la auscultación y justificar cuándo se requiere ampliar la evaluación.</p></article>
+      <article class="card"><h3>05 · Colaborar</h3><p>Crear un recurso digital clínicamente preciso, visualmente claro y documentado con referencias verificables.</p></article>
+    </div>
+  </section>
+
+  <section class="panel" id="tarea" role="tabpanel" aria-labelledby="tab-tarea">
+    <h2>3. Tarea: crear una guía digital de auscultación</h2>
+    <p class="lead">El equipo elaborará una guía visual digital titulada <strong>“Auscultación cardíaca: escuchar, describir y razonar”</strong>, dirigida a estudiantes de Semiología Médica.</p>
+    <div class="grid">
+      <article class="card">
+        <h3>📦 Producto final</h3>
+        <ul>
+          <li>Infografía o presentación de 5–7 diapositivas.</li>
+          <li>Esquema de los focos de auscultación.</li>
+          <li>Secuencia breve del procedimiento.</li>
+          <li>Tabla de S1, S2 y características básicas de los soplos.</li>
+          <li>Un caso simulado con descripción semiológica, sin afirmar un diagnóstico definitivo a partir de datos insuficientes.</li>
+          <li>Referencias bibliográficas en formato APA 7.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>✅ Criterios de éxito</h3>
+        <ul>
+          <li>La información clínica es correcta y coincide con los recursos consultados.</li>
+          <li>La secuencia de exploración es clara y reproducible.</li>
+          <li>Las imágenes tienen etiquetas legibles y fuente identificada.</li>
+          <li>El caso diferencia observación, interpretación e hipótesis.</li>
+          <li>Las citas del texto corresponden a la lista final de referencias.</li>
+        </ul>
+      </article>
+    </div>
+    <h3>Roles colaborativos</h3>
+    <div class="grid">
+      <article class="card role"><h3>🔍 Investigador/a</h3><p>Consulta las fuentes, verifica las afirmaciones, identifica los focos y resume los hallazgos relevantes. Registra los datos bibliográficos y señala cualquier discrepancia entre recursos.</p></article>
+      <article class="card role"><h3>🎨 Diseñador/a</h3><p>Organiza la información en una infografía o presentación. Selecciona colores, esquemas y recursos visuales accesibles, legibles y con atribución adecuada.</p></article>
+      <article class="card role"><h3>✍️ Redactor/a</h3><p>Redacta las explicaciones y el caso simulado, integra las contribuciones del equipo, revisa la terminología y aplica APA 7.</p></article>
+      <article class="card role"><h3>🧑‍⚕️ Revisor/a clínico/a</h3><p>Comprueba la coherencia del producto, detecta afirmaciones no sustentadas y verifica que se distinga entre hallazgo auscultatorio e hipótesis clínica.</p></article>
+    </div>
+    <p class="small">Si el equipo tiene tres integrantes, el rol de revisión clínica puede ser asumido de forma compartida.</p>
+  </section>
+
+  <section class="panel" id="proceso" role="tabpanel" aria-labelledby="tab-proceso">
+    <h2>4. Proceso de trabajo</h2>
+    <p>Completen las etapas en orden. Cada equipo debe conservar un registro de sus decisiones y de las fuentes consultadas.</p>
+    <ol class="steps">
+      <li><strong>Organizar el equipo (10 min).</strong><br>Distribuyan los roles, definan el medio de comunicación y acuerden el nombre del archivo final. Herramientas sugeridas: Google Docs, Microsoft Word en línea o un documento compartido equivalente.</li>
+      <li><strong>Investigar con fuentes confiables (20 min).</strong><br>Lean al menos tres recursos de la sección Recursos. Registren autor institucional o personal, año, título, URL y la afirmación que respalda cada fuente. No utilicen una respuesta generada por IA como única fuente clínica.</li>
+      <li><strong>Construir un mapa conceptual (10 min).</strong><br>Organicen los conceptos: preparación y posición, focos, S1 y S2, sonidos adicionales, soplos y descripción sistemática. Comprueben los datos con las referencias.</li>
+      <li><strong>Resolver el caso simulado (15 min).</strong><br>Describan qué se escucharía y cómo registrarían un hallazgo sin convertirlo automáticamente en un diagnóstico. Identifiquen qué información clínica complementaria sería necesaria.</li>
+      <li><strong>Crear el producto digital (20–30 min).</strong><br>Diseñen la infografía o presentación en Canva, Genially, Google Slides o una herramienta equivalente. Usen diagramas propios o imágenes con licencia compatible y atribución.</li>
+      <li><strong>Utilizar IA generativa de forma crítica (opcional, 10 min).</strong><br>Prompt sugerido: “Actúa como tutor de Semiología Médica. Revisa esta explicación educativa sobre auscultación cardíaca. Señala afirmaciones que necesiten verificación, posibles ambigüedades y aspectos que falten. No inventes fuentes ni afirmes diagnósticos definitivos”. Verifiquen cada sugerencia con la bibliografía original y no introduzcan datos identificables de pacientes.</li>
+      <li><strong>Auditar y entregar (10 min).</strong><br>Revisen exactitud clínica, legibilidad, ortografía, citas y referencias APA 7. Cada integrante explicará brevemente su contribución. Entreguen el archivo en la plataforma educativa según las instrucciones docentes.</li>
+    </ol>
+    <div class="callout"><strong>Herramientas web 2.0:</strong> documento colaborativo, pizarra digital, aplicación de diseño y plataforma educativa. La herramienta facilita el trabajo, pero la calidad se determina por la evidencia, el razonamiento y la revisión clínica.</div>
+  </section>
+
+  <section class="panel" id="recursos" role="tabpanel" aria-labelledby="tab-recursos">
+    <h2>5. Recursos de consulta</h2>
+    <p>Estos enlaces en español sirven como punto de partida. Consulta el contenido original y registra la fecha de consulta. La disponibilidad y los datos editoriales deben verificarse antes de cerrar la bibliografía.</p>
+    <div class="grid">
+      <article class="card resource">
+        <div class="icon">📘</div>
+        <h3>1. Auscultación cardíaca</h3>
+        <a href="https://www.msdmanuals.com/es/professional/trastornos-cardiovasculares/abordaje-del-paciente-card%C3%ADaco/auscultaci%C3%B3n-card%C3%ADaca" target="_blank" rel="noopener noreferrer">Abrir Manual MSD Profesional</a>
+        <p>Gupta, J. I., &amp; Shea, M. J. (2025). <em>Auscultación cardíaca</em>. Manual MSD, versión para profesionales. Revisado en abril de 2025.</p>
+        <p class="small">Útil para revisar la secuencia de exploración, los ruidos cardíacos y la descripción de soplos.</p>
+      </article>
+      <article class="card resource">
+        <div class="icon">🫀</div>
+        <h3>2. Exploración física del corazón</h3>
+        <a href="https://apuntesdemedicina.es/temas/exploracion-fisica-del-corazon-inspeccion-palpacion-y-auscultacion/" target="_blank" rel="noopener noreferrer">Abrir Apuntes de Medicina</a>
+        <p>Molina, V. (2026, 16 de septiembre). <em>Exploración física del corazón: inspección, palpación y auscultación</em>. Apuntes de Medicina.</p>
+        <p class="small">Recurso complementario para ordenar las técnicas de exploración y las características de los ruidos.</p>
+      </article>
+      <article class="card resource">
+        <div class="icon">🩺</div>
+        <h3>3. Exploración clínica y focos</h3>
+        <a href="https://www.cardiomedica.es/expl/" target="_blank" rel="noopener noreferrer">Abrir Cardiomed</a>
+        <p>Cardiomed. (s. f.). <em>Exploración clínica: auscultación y palpación</em>.</p>
+        <p class="small">Recurso de apoyo para estudiar focos, localización y descripción de los sonidos. Contrasta los detalles con fuentes clínicas de referencia.</p>
+      </article>
+      <article class="card resource">
+        <div class="icon">🏥</div>
+        <h3>4. Manual clínico de Cardiología</h3>
+        <a href="https://manualclinico.hospitaluvrocio.es/wp-content/uploads/2020/09/CARDIOLOGIA.pdf" target="_blank" rel="noopener noreferrer">Abrir manual clínico en PDF</a>
+        <p>Hospital Universitario Virgen del Rocío. (s. f.). <em>Cardiología: manual clínico</em> [PDF].</p>
+        <p class="small">Apoyo para contextualizar la exploración cardiovascular dentro de la valoración clínica general. Comprueba autoría y fecha en el propio documento antes de citarlo formalmente.</p>
+      </article>
+    </div>
+    <div class="callout">
+      <strong>Integridad académica:</strong> los datos bibliográficos mostrados son orientativos y deben contrastarse con las páginas originales antes de la entrega final. No cites una fuente que no hayas consultado. En APA 7, incluye citas en el cuerpo del trabajo y referencias completas al final.
+    </div>
+  </section>
+
+  <section class="panel" id="evaluacion" role="tabpanel" aria-labelledby="tab-evaluacion">
+    <h2>6. Evaluación: rúbrica analítica</h2>
+    <p>El docente calificará cada criterio en cuatro niveles. La ponderación propuesta suma 100 puntos. Aunque el encargo incluye el criterio de precisión histórica, en esta WebQuest se interpreta como precisión del contexto histórico y conceptual de la auscultación; si no se solicita una revisión histórica, puede adaptarse a precisión científica y semiológica.</p>
+    <div class="rubric-wrap">
+      <table class="rubric">
+        <thead>
+          <tr>
+            <th>Criterio y peso</th>
+            <th>Excelente (4)</th>
+            <th>Bueno (3)</th>
+            <th>Suficiente (2)</th>
+            <th>Insuficiente (1)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Contextualización del problema<br>25 %</th>
+            <td>Presenta una situación clínica verosímil, relevante y bien delimitada; relaciona síntomas, exploración y necesidad de razonamiento sin concluir más de lo que permiten los datos.</td>
+            <td>El problema es pertinente, pero falta desarrollar una dimensión clínica o justificar mejor la necesidad de la tarea.</td>
+            <td>El contexto es genérico y la relación con la auscultación resulta parcial o poco clara.</td>
+            <td>No presenta un problema comprensible o incluye afirmaciones clínicas incoherentes.</td>
+          </tr>
+          <tr>
+            <th>Precisión histórica y conceptual<br>25 %</th>
+            <td>Explica correctamente los conceptos semiológicos; si incorpora historia, esta está verificada y citada. Distingue hechos, interpretación e incertidumbre.</td>
+            <td>La explicación es mayormente correcta y presenta omisiones menores que no cambian el sentido clínico.</td>
+            <td>Contiene imprecisiones o explicaciones incompletas que requieren corrección.</td>
+            <td>Presenta errores importantes, afirmaciones no sustentadas o confunde hallazgos con diagnósticos definitivos.</td>
+          </tr>
+          <tr>
+            <th>Colaboración<br>20 %</th>
+            <td>Todos los integrantes cumplen sus roles, documentan aportes y participan en la revisión y toma de decisiones.</td>
+            <td>La mayoría participa; los roles y aportes son reconocibles, con coordinación mejorable.</td>
+            <td>La participación es desigual y hay escasa evidencia de integración del trabajo.</td>
+            <td>No hay coordinación verificable o una parte importante del equipo no contribuye.</td>
+          </tr>
+          <tr>
+            <th>Diseño visual<br>15 %</th>
+            <td>Diseño coherente, legible y accesible; jerarquía visual clara, diagramas pertinentes y atribución de imágenes.</td>
+            <td>Diseño comprensible con pequeñas dificultades de legibilidad o consistencia.</td>
+            <td>Organización visual irregular, texto excesivo o diagramas poco claros.</td>
+            <td>El producto es difícil de leer, confuso o utiliza recursos visuales sin atribución cuando corresponde.</td>
+          </tr>
+          <tr>
+            <th>Citación APA 7<br>15 %</th>
+            <td>Todas las afirmaciones que lo requieren están citadas; las referencias son trazables, coherentes y ajustadas a APA 7.</td>
+            <td>Hay errores menores de formato, pero las fuentes pueden localizarse y las citas corresponden a las referencias.</td>
+            <td>Faltan algunas citas o existen inconsistencias entre citas y referencias.</td>
+            <td>Las fuentes no son verificables, faltan citas importantes o se atribuyen datos a referencias que no los respaldan.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Cálculo sugerido</h3>
+    <p>Para cada criterio, asigne 4, 3, 2 o 1 puntos. Puntaje ponderado = (nivel obtenido ÷ 4) × peso del criterio. Sume los cinco resultados para obtener una nota sobre 100.</p>
+    <div class="card">
+      <h3>Autoevaluación del equipo</h3>
+      <label><input type="checkbox"> La guía explica una secuencia sistemática de auscultación.</label><br>
+      <label><input type="checkbox"> Los focos y conceptos están representados de forma clara.</label><br>
+      <label><input type="checkbox"> El caso diferencia hallazgos e hipótesis.</label><br>
+      <label><input type="checkbox"> Todas las fuentes han sido abiertas y revisadas.</label><br>
+      <label><input type="checkbox"> Las citas y referencias son coherentes.</label>
+    </div>
+  </section>
+
+  <section class="panel" id="conclusion" role="tabpanel" aria-labelledby="tab-conclusion">
+    <h2>7. Conclusión: escuchar también es razonar</h2>
+    <p class="lead">La auscultación cardíaca es una habilidad clínica que requiere conocimientos, práctica deliberada y una descripción ordenada. Un sonido aislado no sustituye la evaluación integral de la persona ni confirma por sí solo una enfermedad.</p>
+    <div class="grid">
+      <article class="card">
+        <h3>💬 Reflexión colaborativa</h3>
+        <ol>
+          <li>¿Qué errores pueden aparecer si se ausculta sin seguir una secuencia?</li>
+          <li>¿Cómo se distingue lo que se escucha de la interpretación clínica?</li>
+          <li>¿Qué ventajas y limitaciones tienen los audios digitales para aprender auscultación?</li>
+          <li>¿Cómo puede un equipo utilizar herramientas digitales e IA sin sustituir las fuentes clínicas ni el juicio profesional?</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h3>🌍 Conexión con la práctica actual</h3>
+        <p>Los estetoscopios digitales, las bibliotecas de sonidos y los recursos de simulación pueden ampliar las oportunidades de práctica. Sin embargo, la tecnología debe acompañarse de supervisión, contexto clínico, privacidad y evaluación crítica de la evidencia.</p>
+      </article>
+    </div>
+    <div class="callout"><strong>Producto de cierre:</strong> cada integrante escribirá una conclusión breve: un aprendizaje adquirido, una limitación reconocida y una acción concreta para mejorar su próxima exploración cardiovascular.</div>
+  </section>
+
+  <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <h2>8. Quiz interactivo autocorregible</h2>
+    <p>Responde las nueve actividades. Incluye tres preguntas de selección múltiple, dos de verdadero/falso, dos ejercicios de arrastrar y soltar y dos de relacionar columnas. El resultado es formativo y no sustituye una evaluación clínica práctica.</p>
+    <div class="progress" aria-label="Progreso del cuestionario"><div class="progressbar" id="progressbar"></div></div>
+    <form id="quizForm">
+      <div class="quizbox">
+        <h3>A. Selección múltiple</h3>
+        <div class="question">
+          <fieldset>
+            <legend>1. ¿Cuál es una secuencia habitual de focos para la auscultación cardíaca?</legend>
+            <label class="option"><input type="radio" name="q1" value="a"> A. Mitral, pulmonar, aórtico y carotídeo exclusivamente</label>
+            <label class="option"><input type="radio" name="q1" value="b"> B. Aórtico, pulmonar, tricuspídeo y mitral, siguiendo un recorrido sistemático</label>
+            <label class="option"><input type="radio" name="q1" value="c"> C. Solo el foco mitral</label>
+            <label class="option"><input type="radio" name="q1" value="d"> D. Auscultar al azar donde se perciba más ruido</label>
+            <div class="feedback" id="f1" aria-live="polite"></div>
+          </fieldset>
+        </div>
+        <div class="question">
+          <fieldset>
+            <legend>2. ¿Qué representa principalmente S1 en la auscultación habitual?</legend>
+            <label class="option"><input type="radio" name="q2" value="a"> A. El cierre de las válvulas auriculoventriculares al inicio de la sístole</label>
+            <label class="option"><input type="radio" name="q2" value="b"> B. El cierre de las válvulas semilunares al final de la diástole</label>
+            <label class="option"><input type="radio" name="q2" value="c"> C. El llenado auricular exclusivamente</label>
+            <label class="option"><input type="radio" name="q2" value="d"> D. Un soplo continuo</label>
+            <div class="feedback" id="f2" aria-live="polite"></div>
+          </fieldset>
+        </div>
+        <div class="question">
+          <fieldset>
+            <legend>3. ¿Qué características conviene documentar al describir un soplo?</legend>
+            <label class="option"><input type="radio" name="q3" value="a"> A. Solo el nombre supuesto de la enfermedad</label>
+            <label class="option"><input type="radio" name="q3" value="b"> B. Únicamente si el paciente lo escucha</label>
+            <label class="option"><input type="radio" name="q3" value="c"> C. Momento del ciclo, localización, intensidad, tono, duración e irradiación cuando corresponda</label>
+            <label class="option"><input type="radio" name="q3" value="d"> D. Solo la frecuencia respiratoria</label>
+            <div class="feedback" id="f3" aria-live="polite"></div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="quizbox">
+        <h3>B. Verdadero o falso</h3>
+        <div class="question">
+          <fieldset>
+            <legend>4. La auscultación cardíaca, por sí sola, siempre confirma el diagnóstico etiológico de un soplo.</legend>
+            <label class="option"><input type="radio" name="q4" value="v"> Verdadero</label>
+            <label class="option"><input type="radio" name="q4" value="f"> Falso</label>
+            <div class="feedback" id="f4" aria-live="polite"></div>
+          </fieldset>
+        </div>
+        <div class="question">
+          <fieldset>
+            <legend>5. La descripción de los ruidos cardíacos debe considerar su momento de aparición en el ciclo cardíaco.</legend>
+            <label class="option"><input type="radio" name="q5" value="v"> Verdadero</label>
+            <label class="option"><input type="radio" name="q5" value="f"> Falso</label>
+            <div class="feedback" id="f5" aria-live="polite"></div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="quizbox">
+        <h3>C. Arrastrar y soltar</h3>
+        <p class="small">Arrastra cada etiqueta hasta su definición. En pantallas táctiles, también puedes tocar una etiqueta y luego tocar la zona de destino.</p>
+        <div class="question">
+          <strong>6. Relaciona cada foco con su referencia anatómica habitual.</strong>
+          <div class="dragbank" id="bank6">
+            <span class="draggable" draggable="true" tabindex="0" role="button" data-value="aortico">Aórtico</span>
+            <span class="draggable" draggable="true" tabindex="0" role="button" data-value="pulmonar">Pulmonar</span>
+            <span class="draggable" draggable="true" tabindex="0" role="button" data-value="mitral">Mitral</span>
+          </div>
+          <div class="match-row"><span>2.º espacio intercostal derecho, junto al esternón</span><div class="dropzone" data-answer="aortico" tabindex="0" aria-label="Destino foco aórtico"><span>Soltar aquí</span></div></div>
+          <div class="match-row"><span>2.º espacio intercostal izquierdo, junto al esternón</span><div class="dropzone" data-answer="pulmonar" tabindex="0" aria-label="Destino foco pulmonar"><span>Soltar aquí</span></div></div>
+          <div class="match-row"><span>Región del ápex, habitualmente en el 5.º espacio intercostal izquierdo cerca de la línea medioclavicular</span><div class="dropzone" data-answer="mitral" tabindex="0" aria-label="Destino foco mitral"><span>Soltar aquí</span></div></div>
+          <div class="feedback" id="f6" aria-live="polite"></div>
+        </div>
+        <div class="question">
+          <strong>7. Relaciona el concepto con la descripción general.</strong>
+          <div class="dragbank" id="bank7">
+            <span class="draggable" draggable="true" tabindex="0" role="button" data-value="s1">S1</span>
+            <span class="draggable" draggable="true" tabindex="0" role="button" data-value="s2">S2</span>
+          </div>
+          <div class="match-row"><span>Se asocia principalmente al cierre de las válvulas mitral y tricúspide</span><div class="dropzone" data-answer="s1" tabindex="0" aria-label="Destino S1"><span>Soltar aquí</span></div></div>
+          <div class="match-row"><span>Se asocia al cierre de las válvulas aórtica y pulmonar</span><div class="dropzone" data-answer="s2" tabindex="0" aria-label="Destino S2"><span>Soltar aquí</span></div></div>
+          <div class="feedback" id="f7" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="quizbox">
+        <h3>D. Relacionar columnas</h3>
+        <div class="question">
+          <strong>8. Relaciona cada técnica con su descripción.</strong>
+          <div class="match-row"><label for="m81">Inspección</label><select id="m81" name="m81"><option value="">Selecciona…</option><option value="a">Observación visual sistemática</option><option value="b">Obtención de sonidos con estetoscopio</option><option value="c">Exploración mediante golpes controlados</option></select></div>
+          <div class="match-row"><label for="m82">Percusión</label><select id="m82" name="m82"><option value="">Selecciona…</option><option value="a">Observación visual sistemática</option><option value="b">Obtención de sonidos con estetoscopio</option><option value="c">Exploración mediante golpes controlados</option></select></div>
+          <div class="match-row"><label for="m83">Auscultación</label><select id="m83" name="m83"><option value="">Selecciona…</option><option value="a">Observación visual sistemática</option><option value="b">Obtención de sonidos con estetoscopio</option><option value="c">Exploración mediante golpes controlados</option></select></div>
+          <div class="feedback" id="f8" aria-live="polite"></div>
+        </div>
+        <div class="question">
+          <strong>9. Relaciona el término con su significado semiológico.</strong>
+          <div class="match-row"><label for="m91">Soplo sistólico</label><select id="m91" name="m91"><option value="">Selecciona…</option><option value="a">Sonido adicional durante la sístole</option><option value="b">Sonido adicional durante la diástole</option><option value="c">Ritmo irregular definido solo por el pulso</option></select></div>
+          <div class="match-row"><label for="m92">Soplo diastólico</label><select id="m92" name="m92"><option value="">Selecciona…</option><option value="a">Sonido adicional durante la sístole</option><option value="b">Sonido adicional durante la diástole</option><option value="c">Ritmo irregular definido solo por el pulso</option></select></div>
+          <div class="feedback" id="f9" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <button class="button" type="submit">Corregir respuestas</button>
+      <button class="button secondary" type="button" id="resetQuiz">Reiniciar quiz</button>
+    </form>
+    <div class="result" id="quizResult" aria-live="polite">
+      <div>Resultado</div>
+      <strong id="score"></strong>
+      <p id="message"></p>
+      <button class="button" id="reviewBtn" type="button">Revisar retroalimentación</button>
+    </div>
+  </section>
+
+  <section class="panel" id="juego" role="tabpanel" aria-labelledby="tab-juego">
+    <h2>9. Juego complementario</h2>
+    <p>Utiliza el recurso interactivo como actividad lúdica complementaria. El juego enlazado fue compartido previamente en esta conversación; su contenido no necesariamente corresponde a auscultación cardíaca.</p>
+    <div class="card">
+      <h3>Piñata Challenge · Genially</h3>
+      <p>Completa el juego y reflexiona sobre qué elementos de la gamificación ayudan a mantener la atención y ofrecer retroalimentación.</p>
+      <iframe src="https://view.genially.com/6ae2d23c582c12e024a4367b"
+        title="Juego Piñata Challenge en Genially"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <p class="small">Si el contenido no se muestra dentro de esta página, <a href="https://view.genially.com/6ae2d23c582c12e024a4367b" target="_blank" rel="noopener noreferrer">ábrelo directamente en Genially</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><strong>WebQuest de Semiología Médica · Auscultación cardíaca</strong></p>
+  <p>Recurso educativo para formación de pregrado. No sustituye la supervisión clínica, los protocolos institucionales ni el juicio profesional.</p>
+  <p><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Volver al inicio</a></p>
+</footer>
+
+<script>
+(function(){
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.panel')];
+
+  function activateTab(tab,moveFocus=false){
+    tabs.forEach(t=>{
+      const selected=t===tab;
+      t.setAttribute('aria-selected',String(selected));
+      t.tabIndex=selected?0:-1;
+    });
+    panels.forEach(p=>p.classList.toggle('active',p.id===tab.dataset.target));
+    if(moveFocus) tab.focus();
+  }
+  tabs.forEach((tab,i)=>{
+    tab.addEventListener('click',()=>activateTab(tab));
+    tab.addEventListener('keydown',e=>{
+      let next=i;
+      if(e.key==='ArrowRight')next=(i+1)%tabs.length;
+      else if(e.key==='ArrowLeft')next=(i-1+tabs.length)%tabs.length;
+      else if(e.key==='Home')next=0;
+      else if(e.key==='End')next=tabs.length-1;
+      else return;
+      e.preventDefault();activateTab(tabs[next],true);
+    });
+  });
+
+  const answers={
+    q1:{value:'b',text:'La auscultación debe seguir un recorrido sistemático e incluir los focos habituales.'},
+    q2:{value:'a',text:'S1 se relaciona principalmente con el cierre de las válvulas auriculoventriculares al inicio de la sístole.'},
+    q3:{value:'c',text:'La descripción debe ser ordenada y contemplar el momento del ciclo, localización y características del sonido.'},
+    q4:{value:'f',text:'Falso. La auscultación orienta el razonamiento, pero el diagnóstico requiere contexto clínico y, cuando corresponde, pruebas complementarias.'},
+    q5:{value:'v',text:'Verdadero. El momento del ciclo es una característica importante de los sonidos y soplos.'},
+    m81:{value:'a',text:'La inspección es la observación visual sistemática.'},
+    m82:{value:'c',text:'La percusión utiliza golpes controlados para valorar las características del sonido obtenido.'},
+    m83:{value:'b',text:'La auscultación permite escuchar sonidos corporales, habitualmente con un estetoscopio.'},
+    m91:{value:'a',text:'Un soplo sistólico se produce durante la sístole.'},
+    m92:{value:'b',text:'Un soplo diastólico se produce durante la diástole.'}
+  };
+
+  function setFeedback(id,ok,msg){
+    const el=document.getElementById(id);
+    el.className='feedback '+(ok?'correct':'incorrect');
+    el.textContent=(ok?'Correcto. ':'Revisa este concepto. ')+msg;
+  }
+
+  const selectedDrops={};
+  let activeDrag=null;
+
+  document.querySelectorAll('.draggable').forEach(item=>{
+    item.addEventListener('dragstart',e=>{
+      activeDrag=item;
+      e.dataTransfer.setData('text/plain',item.dataset.value);
+      e.dataTransfer.effectAllowed='move';
+    });
+    item.addEventListener('click',()=>{
+      if(activeDrag===item){item.style.outline='';activeDrag=null;return;}
+      document.querySelectorAll('.draggable').forEach(x=>x.style.outline='');
+      activeDrag=item;item.style.outline='3px solid #f1bd59';
+    });
+    item.addEventListener('keydown',e=>{
+      if((e.key==='Enter'||e.key===' ')&&!e.repeat){
+        e.preventDefault();item.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('.dropzone').forEach(zone=>{
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('over');
+      const value=e.dataTransfer.getData('text/plain');
+      placeDrop(zone,value);
+    });
+    zone.addEventListener('click',()=>{
+      if(activeDrag){
+        placeDrop(zone,activeDrag.dataset.value);
+        activeDrag.style.outline='';activeDrag=null;
+      }
+    });
+    zone.addEventListener('keydown',e=>{
+      if((e.key==='Enter'||e.key===' ')&&activeDrag){
+        e.preventDefault();placeDrop(zone,activeDrag.dataset.value);
+        activeDrag.style.outline='';activeDrag=null;
+      }
+    });
+  });
+
+  function placeDrop(zone,value){
+    const bank=zone.closest('.quizbox').querySelector('.dragbank');
+    const item=bank.querySelector('[data-value="'+value+'"]');
+    if(!item)return;
+    const previous=selectedDrops[zone.dataset.answer];
+    if(previous){
+      const previousItem=bank.querySelector('[data-value="'+previous+'"]');
+      if(previousItem)previousItem.hidden=false;
+    }
+    Object.keys(selectedDrops).forEach(key=>{
+      if(selectedDrops[key]===value)delete selectedDrops[key];
+    });
+    selectedDrops[zone.dataset.answer]=value;
+    zone.innerHTML='';
+    const label=document.createElement('span');
+    label.textContent=item.textContent;
+    zone.appendChild(label);
+    item.hidden=true;
+  }
+
+  function gradeDrops(prefix){
+    const zones=[...document.querySelectorAll('.dropzone')].filter(z=>{
+      const id=z.closest('.question').querySelector('.feedback').id;
+      return id===prefix;
+    });
+    let correct=0;
+    zones.forEach(z=>{
+      const chosen=selectedDrops[z.dataset.answer];
+      if(chosen===z.dataset.answer)correct++;
+    });
+    const total=zones.length;
+    const ok=correct===total;
+    const explanation=prefix==='f6'
+      ?'Focos: aórtico (2.º espacio intercostal derecho), pulmonar (2.º izquierdo) y mitral (ápex).'
+      :'S1 se asocia principalmente al cierre de las válvulas auriculoventriculares y S2 al cierre de las semilunares.';
+    setFeedback(prefix,ok,correct+'/'+total+' correctas. '+explanation);
+    return correct;
+  }
+
+  function updateProgress(){
+    const names=['q1','q2','q3','q4','q5','m81','m82','m83','m91','m92'];
+    let answered=names.filter(n=>{
+      if(n.startsWith('q'))return !!document.querySelector('input[name="'+n+'"]:checked');
+      return !!document.querySelector('select[name="'+n+'"]').value;
+    }).length;
+    answered+=document.querySelectorAll('.dropzone').filter?0:0;
+    const drops=[...document.querySelectorAll('.dropzone')].filter(z=>selectedDrops[z.dataset.answer]).length;
+    const total=names.length+5;
+    document.getElementById('progressbar').style.width=Math.round((answered+drops)/total*100)+'%';
+  }
+  document.querySelectorAll('#quizForm input,#quizForm select').forEach(el=>el.addEventListener('change',updateProgress));
+
+  document.getElementById('quizForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    let score=0;
+    const total=12;
+    [
+      ['q1','f1'],['q2','f2'],['q3','f3'],['q4','f4'],['q5','f5']
+    ].forEach(([name,fid])=>{
+      const picked=document.querySelector('input[name="'+name+'"]:checked');
+      const a=answers[name];
+      const ok=!!picked&&picked.value===a.value;
+      if(ok)score++;
+      setFeedback(fid,ok,a.text);
+    });
+
+    const drag6=gradeDrops('f6');
+    const drag7=gradeDrops('f7');
+    score+=drag6+drag7;
+
+    [['m81','f8'],['m82','f8'],['m83','f8']].forEach(([name,fid])=>{
+      const ok=document.querySelector('[name="'+name+'"]').value===answers[name].value;
+      if(ok)score++;
+    });
+    const m8ok=['m81','m82','m83'].every(n=>document.querySelector('[name="'+n+'"]').value===answers[n].value);
+    setFeedback('f8',m8ok,'Inspección = observación visual; percusión = golpes controlados; auscultación = escucha de sonidos.');
+
+    [['m91','f9'],['m92','f9']].forEach(([name,fid])=>{
+      const ok=document.querySelector('[name="'+name+'"]').value===answers[name].value;
+      if(ok)score++;
+    });
+    const m9ok=['m91','m92'].every(n=>document.querySelector('[name="'+n+'"]').value===answers[n].value);
+    setFeedback('f9',m9ok,'Sistólico = durante la sístole; diastólico = durante la diástole.');
+
+    const result=document.getElementById('quizResult');
+    result.style.display='block';
+    document.getElementById('score').textContent=score+' / '+total+' puntos';
+    document.getElementById('message').textContent=
+      score>=11?'Excelente desempeño. Mantén la práctica y confirma tus conocimientos con exploración supervisada.':
+      score>=8?'Buen avance. Revisa la retroalimentación y practica la secuencia de auscultación.':
+      score>=5?'Estás construyendo la base. Repasa los focos y los ruidos cardíacos antes de volver a intentarlo.':
+      'Vuelve a estudiar los recursos y repite el quiz. Prioriza los conceptos básicos y la descripción sistemática.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+
+  document.getElementById('reviewBtn').addEventListener('click',()=>{
+    document.querySelectorAll('.feedback').forEach(el=>{
+      if(el.textContent.trim())el.style.padding='7px';
+    });
+    document.getElementById('quizForm').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  document.getElementById('resetQuiz').addEventListener('click',()=>{
+    document.getElementById('quizForm').reset();
+    document.querySelectorAll('.feedback').forEach(el=>{el.textContent='';el.className='feedback';el.style.padding='';});
+    document.querySelectorAll('.dropzone').forEach(z=>{z.innerHTML='<span>Soltar aquí</span>';});
+    document.querySelectorAll('.draggable').forEach(x=>{x.hidden=false;x.style.outline='';});
+    Object.keys(selectedDrops).forEach(k=>delete selectedDrops[k]);
+    activeDrag=null;
+    document.getElementById('quizResult').style.display='none';
+    document.getElementById('progressbar').style.width='0%';
+  });
+})();
+</script>
+</body>
+</html>
